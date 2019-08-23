@@ -1,0 +1,128 @@
+<extends file="main">
+  <block name="content">
+    <section class="section white">
+      <div class="pure-container content">
+        <div id="overview-nav" class="pure-col pure-col--3"></div>
+        <div id="main-content" class="pure-col pure-col--9">
+          <h1>Installation</h1>
+          <p>Horsepower can be installed multiple ways. Choosing the way you wish to install is up to you. The command
+            line tool allows for many features that you would not otherwise receive by installing directly from git.</p>
+          <h2>Command Line Tool</h2>
+          <p>Horsepower can be installed using the command line tool, and having installed all of the prerequisites,
+            creating
+            an application is very easy using <code>horsepower-cli</code></p>
+          <pre><code class="language-bash">npm install -g @horsepower/cli</code></pre>
+          <p>Next all that needs to be done is to run the <code>new</code> command to create a new project</p>
+          <pre><code class="language-bash">hp new hello-world</code></pre>
+          <p>The following process will then run:</p>
+          <ol>
+            <li>A folder will be created called <code>hello-world</code> in the current directory</li>
+            <li>Horsepower will be downloaded into the <code>hello-world</code> folder</li>
+            <li>All of the dependencies of Horsepower will be downloaded</li>
+            <li>A temporary server will be started</li>
+            <li>The url <code>http://localhost:5000</code> will be opened in a new browser window</li>
+          </ol>
+          <p>You should then see the <b>Welcome</b> screen within your browser and if you do, everything should be
+            working!
+          </p>
+          <h2>Git</h2>
+          <p>This is the process that the command line tool does automatically.</p>
+          <pre><code class="language-bash">git clone git@github.com:horsepowerjs/horsepower.git hello-world --depth 1
+cd hello-world
+npm install
+node ./index.js</code></pre>
+          <P>When opening a browser and navigating to <code>http://localhost:5000</code>, you should then see the
+            <b>Welcome</b> screen within your browser and if you do, everything should be working!</P>
+          <h1>Static Files</h1>
+          <p>Static files are are configured to automatically be served from <code>/public</code>. Any files located in
+            that directory will automatically be served when requested without the <code>/public</code> prefix if the
+            file exists. If the file does not exist, then horsepower will attempt to load the request from your defined
+            routes. If all else fails, then a <code>404</code> will be returned to the client.</p>
+          <h1>Web Servers</h1>
+          <p>horsepower runs on the default port <code>5000</code>, so to access it you need to know the port. This is
+            fine
+            during development, but as a public facing website you most likely don't want that. To fix this we need to
+            place
+            the horsepower
+            server behind a web server such as Nginx.</p>
+          <h2>Nginx</h2>
+          <p>Nginx is a fast lightweight server that is easy to use on linux servers.</p>
+          <p>First you will want to install and create a new configuration file:</p>
+          <pre><code class="language-bash"># Install nginx if it hasn't already been installed
+sudo apt install nginx
+
+# Create a new configuration file
+sudo vim /etc/nginx/sites-available/example.com</code></pre>
+          <p>Within the configuration file add the following content, replacing <code>example.com</code> with your
+            domain
+            name
+            and <code>5000</code> with the actual port that you are running the horsepower server on.</p>
+          <pre><code class="language-nginx">server {
+  # Setup the domain name(s)
+  # Each domain is separated by a space
+  # Since horsepower supports domain routing, multiple domains can share the same port
+  # Note: Unrelated domains should have their own port and horsepower project
+  server_name example.com api.example.com;
+  listen 80;
+
+  # Setup the proxy # This will forward all requests to the horsepower http server
+  # and then it will relay the servers response back to the client
+  location / {
+    proxy_pass http://127.0.0.1:5000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_cache_bypass $http_upgrade;
+  }
+}</code></pre>
+          <p>We will want to create a symbolic link to this file so that we can enable/disable this domain without
+            deleting the file itself, and just add/remove the symbolic link.</p>
+          <pre><code class="language-bash"># CD to nginx "sites-enabled" directory
+cd /etc/nginx/sites-enabled
+
+# Create the symbolic link
+ln -s ../sites-available/example.com ./example.com</code></pre>
+          <p>Finally we start both of the services and test the domain (assuming it has already propagated).</p>
+          <pre><code class="language-bash"># Start the horsepower http server
+pm2 start /path/to/ecosystem.config.js
+
+# Start the nginx service
+sudo service nginx start</code></pre>
+          <h2>Apache</h2>
+          <p>Apache is a popular server that works well on all platforms though it isn't lightweight like Nginx.</p>
+          <p>First we will start by installing apache if it hasn't already been installed, then we will create the
+            configuration file.</p>
+          <pre><code class="language-bash"># Install apache if it hasn't already been installed
+sudo apt install apache2
+vim /etc/apache2/sites-available/example.conf</code></pre>
+          <p>So first we create a new virtual host, replacing <code>example.com</code> with your domain name and
+            <code>5000</code> with the actual port that you are running the horsepower server on.</p>
+          <pre><code class="language-apacheconf">&lt;VirtualHost *:80&gt;
+  # Setup the domain name(s)
+  # Since horsepower supports domain routing, multiple domains can share the same port
+  # Note: Unrelated domains should have their own port and horsepower project
+  ServerName example.com
+  ServerAlias api.example.com
+
+  # Setup the proxy
+  # This will forward all requests to the horsepower http server
+  # and then it will relay the servers response back to the client
+  ProxyPass http://127.0.0.1:5000
+  ProxyPreserveHost On
+&lt;/VirtualHost&gt;</code></pre>
+          <p>You must also have the modules enabled within the master apache config file:</p>
+          <pre><code class="language-apacheconf">LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so</code></pre>
+          <p>Finally we start both of the services and test the domain (assuming it has already propagated).</p>
+          <pre><code class="language-bash"># Start the horsepower http server
+pm2 start /path/to/ecosystem.config.js
+
+# Start the apache service
+sudo service apache2 start</code></pre>
+        </div>
+      </div>
+    </section>
+  </block>
+</extends>

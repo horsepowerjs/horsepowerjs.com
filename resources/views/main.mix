@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <!-- <link rel="stylesheet" href="/css/pure.css"> -->
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://kit.fontawesome.com/1cdc3171fe.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/themes/prism.min.css" integrity="sha256-77qGXu2p8NpfcBpTjw4jsMeQnz0vyh74f5do0cWjQ/Q=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/command-line/prism-command-line.min.css" integrity="sha256-QViEGvwX/42OrD49huSb2mGZtUQwVKNA5Ux58tMWLOs=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js" integrity="sha256-NFZVyNmS1YlmiklazBA+TALYJlJtZj/y/i/oADk6CVE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/prism-markup.min.js" integrity="sha256-8nT1E50WC5TDeb3+USsFEXN5ZGgLdmwZ6RS5KT71Wjs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/command-line/prism-command-line.min.js" integrity="sha256-HbPtuLB7rt3ovbzR13yYr372EnNYas7oLF7+9kRNf0w=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/prism-bash.min.js" integrity="sha256-0W9ddRPtgrjvZVUxGhU/ShLxFi3WGNV2T7A7bBTuDWo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/prism-nginx.min.js" integrity="sha256-PvVuCUIh/Nz2iClDLCCsV8DmewrWCJhVo8Ti5hcidc4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/prism-apacheconf.min.js" integrity="sha256-W3IECzz0Va8VLI8giC/pr3BbJfLVVkzVHEQ4kkcfFkQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/prism-sql.min.js" integrity="sha256-zgHnuWPEbzVKrT72LUtMObJgbwkv0VESwRfz7jpdsq0=" crossorigin="anonymous"></script>
+
+    <script src="/js/app.js" defer></script>
+    <title>Horsepower</title>
+  </head>
+
+  <body>
+    <block name="header"></block>
+    <div class="hero blue-header"></div>
+    <header class="pure-depth--raised blue-header pure-margin-bottom--5rem">
+      <nav class="pure-container">
+        <div class="pure-navbar">
+          <div class="pure-navbar--brand"><a href="/"><img src="/images/logo2.svg" alt="Horsepower Logo" /></a></div>
+          <div class="pure-navbar--menu"><a class="pure-navbar--item" href="/getting-started">Getting Started</a>
+            <a class="pure-navbar--item" href="/docs">Documentation</a><a class="pure-navbar--item">Components</a>
+            <a class="pure-navbar--item" href="/demo">Examples</a>
+          </div>
+          <div class="pure-navbar--burger"><a><i class="fal fa-bars"></i></a></div>
+        </div>
+      </nav>
+    </header>
+    <main class="section-block">
+      <block name="content"></block>
+    </main>
+    <footer class="section-block"></footer>
+  </body>
+
+</html>

@@ -1,0 +1,88 @@
+.pure-nav {
+  position: relative;
+
+  &.pure-nav--fixed {
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: sticky;
+    height: fit-content;
+    top: 0;
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: #ffffff;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      /* Handle on hover */
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    position: relative;
+
+    ul {
+      & > li {
+        padding-left: 1em;
+
+        & > a {
+          font-weight: 300;
+        }
+      }
+    }
+
+    li {
+      &.pure-nav--active {
+        & > a {
+          svg {
+            transform: rotate(90deg);
+          }
+        }
+
+        & > ul {
+          display: block;
+        }
+      }
+
+      & > ul {
+        display: none;
+      }
+
+      & > a {
+        &:hover {
+          background-color: $light-gray;
+        }
+        display: flex;
+        padding: 0.3rem;
+        font-weight: 500;
+        flex-direction: row;
+
+        svg {
+          transition: transform 0.2s ease-in-out;
+        }
+
+        :last-child {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}

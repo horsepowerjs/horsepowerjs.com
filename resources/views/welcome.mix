@@ -1,0 +1,33 @@
+<extends file="main">
+  <block name="content">
+    <div class="hero blue-header"></div>
+    <div class="heading">
+      <img src="/images/logo2.svg" alt="Horsepower Logo" />
+      <div class="horse-shadow"></div>
+    </div>
+    <section class="section white">
+      <div class="pure-container">
+        <div class="pure-card about pure-row pure-row--vertical_center">
+          <div class="card-content pure-row">
+            <div class="pure-col pure-col--4">
+              <h3 class="pure-margin--0px">
+                <i class="fab fa-twitter pure-margin-right--5px"></i>
+                Twitter
+              </h3>
+            </div>
+            <div class="pure-col pure-col--4">
+              <h3 class="pure-margin--0px">Server with structure</h3>
+            </div>
+            <div class="pure-col pure-col--4">
+              <h3 class="pure-margin--0px pure-text--align-right">
+                <a href="https://github.com/horsepowerjs/horsepower" target="_blank">Github
+                  <i class="fab fa-github pure-margin-left--5px"></i>
+                </a>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </block>
+</extends>

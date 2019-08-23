@@ -1,0 +1,62 @@
+<h1>Middleware</h1>
+<p>Middleware is a way of running one or more processes before the controller is executed. This is helpful for deciding on how a request should be handled before the controller runs. For example should this request be ajax only? If so, a middleware could be added to the route that sends the user a <code>400</code> error if the request isn't sent via ajax.</p>
+<h2>Defining Middleware</h2>
+<p>The following will perform middleware <b>before</b> the request is handled.</p>
+<pre><code class="language-javascript">module.exports = {
+  handle (client) {
+    // Perform the task
+    return true
+  }
+}
+</code></pre>
+<p>However, you may need to perform the task <b>after</b> the request is handled which can be done like this.</p>
+<pre><code class="language-javascript">module.exports = {
+  postHandle (client) {
+    // Perform the task
+    return true
+  }
+}
+</code></pre>
+
+
+<h2>Middleware Types</h2>
+<p>There are two types of middleware:</p>
+<ol>
+  <li>Global middleware</li>
+  <li>Route middleware</li>
+</ol>
+<h3>Global Middleware</h3>
+<p>Global middleware is middleware that runs on every request. This can be used for sessions, rate limiting or whatever you need to run on every request.</p>
+<p>This middleware is not setup in the same way that route middleware is setup, as it is added to <code>/config/middleware.js</code>.</p>
+<pre><code class="language-javascript">const { Session, Cookies } = require('../app/middleware')
+
+module.exports = {
+  middleware: [Session, Cookies]
+}
+</code></pre>
+<h2>Route Middleware</h2>
+<p>Route middleware is more common than global middleware, and is use on a per-route basis. This is added to either the <code>group</code> method or one of the provided method type methods (<code>Router.get()</code>, <code>Router.post()</code>, etc.)</p>
+<pre><code class="language-javascript">const { Ajax } = require('horsepower')
+
+Router.get('/', { middleware: [Ajax] }, client => client.response.html('Hello World'))
+</code></pre>
+<p>Instead of defining the same middleware on every route, a group can be used to define middleware on a group of routes.</p>
+<pre><code class="language-javascript">const { Ajax } = require('horsepower')
+
+Router.group({ middleware: [Ajax] }, () => {
+  Router.get('/ping', client => client.response.html('pong'))
+  Router.get('/pong', client => client.response.html('ping'))
+})
+</code></pre>
+<h2>Middleware Groups</h2>
+<p>Sometimes middleware needs to be grouped into groups because writing out the same middleware repeatedly can get tiresome. These middleware groups are than executed like macros.</p>
+<p>By editing <code>/config/middleware.js</code> a group of middleware can be created for use.</p>
+<pre><code class="language-javascript">module.exports = {
+  middlewareGroups: {
+    session: [Cookies, Session],
+    apiAuth: [Ajax, Auth]
+  }
+}
+</code></pre>
+<p>Then you can use that group within your routes by passing the value as a <code>string</code> instead of a reference to the middleware option:</p>
+<pre><code class="language-javascript">Router.get('/ping', { middleware: ['apiAuth'] }, () => {})</code>

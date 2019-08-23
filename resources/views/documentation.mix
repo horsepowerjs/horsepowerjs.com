@@ -1,0 +1,15 @@
+<extends file="main">
+  <block name="content">
+    <section class="section white">
+      <div class="pure-container content">
+        <div id="master-nav" class="pure-col pure-col--2">
+          <include file="stubs/docs-nav"></include>
+        </div>
+        <div id="main-content" class="pure-col pure-col--8">
+          <include file="{{$path}}" else="/docs/index"></include>
+        </div>
+        <div id="overview-nav" class="pure-col pure-col--2"></div>
+      </div>
+    </section>
+  </block>
+</extends>

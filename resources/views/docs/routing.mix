@@ -1,0 +1,191 @@
+<h1>Routing</h1>
+<p><b>Routing</b> refers to how an application’s endpoints (URIs) respond to client requests.</p>
+<pre><code class="language-javascript">const { Router } = require('horsepower')
+
+Router.get('/', client => client.response.html('Hello World'))
+</code></pre>
+
+
+<h2>Routes</h2>
+<p>A route has 1-3 parameters for creating a route.</p>
+<ul>
+  <li><code>path</code> &ndash; (optional) this is the path of the url which can be a string or regexp. For the url <code>http://example.com/test/route</code> the path would be <code>/test/route</code>. If not specified the path defaults to <code>/</code>.</li>
+  <li><code>options</code> &ndash; (optional) this is the options for the route, such as middleware to be used.</li>
+  <li><code>controller</code> (required) this is the callback/method to be executed. It can either be a string or a
+    function.</li>
+</ul>
+<p>Routes have multiple formats. One way is to use strings which then execute a controller module in the controllers directory.</p>
+
+<pre><code class="language-javascript">// Calls the controller 'MyController' and executes the method 'main'
+Router.get('/', 'MyController')
+
+// Calls the controller 'MyController' and executes the method 'myMethod'
+Router.get('/', 'MyController@myMethod')
+
+// Calls the controller 'MyController' within the directory 'Public' and executes the method 'myMethod'
+Router.get('/', 'Public/MyController@myMethod')
+</code></pre>
+<p>Another way to create a route is to pass a function as the last parameter.</p>
+<pre><code class="language-javascript">Router.get(&apos;/&apos;, client =&gt; client.response.html(&apos;Hello World&apos;))
+</code></pre>
+
+
+<h2>Route Groups</h2>
+<p>A route group is a way to prefix paths and/or add middleware to a group of routes.</p>
+<pre><code class="language-javascript">Router.group('/settings', () => {
+  Router.get('/profile', 'Settings@profile')
+  Router.get('/notifications', 'Settings@notifications')
+})
+</code></pre>
+<p>In the above example two routes are created within a group. This will create two routes:</p>
+<ul>
+  <li><code>/settings/profile</code></li>
+  <li><code>/settings/notifications</code></li>
+</ul>
+<p>This can be taken further by adding some middleware to the group. For example if we want to protect these routes to
+  logged in users only, we could create an <code>Auth</code> middleware that checks your logged in status and applies it
+  to the group as
+  a whole instead of each route individually.</p>
+<pre><code class="language-javascript">const { Auth } = require('../middleware/Auth.js')
+
+Router.group('/settings', { middleware: [Auth] }, () => {
+  Router.get('/profile', 'Settings@profile')
+  Router.get('/notifications', 'Settings@notifications')
+})</code></pre>
+
+
+<h2>Route Domains</h2>
+<p class="warn"><code>Router.domain()</code> is not intended for mixing two or more unrelated websites together. Its
+  main purpose is to separate routes into two or more domains/sub-domains that share content such as views, controllers,
+  middleware, etc.</p>
+<p>A route domain is a way to handle multiple domains/sub-domains that access the routes. For example
+  <code>example.com</code> and <code>api.example.com</code>. The two routes both share the same configuration, database,
+  sessions, etc. but you probably don't
+  want them to share routes.</p>
+<p>So, to separate the two we use <code>Router.domain()</code> which will add the routes to a particular domain.</p>
+<p class="warn"><code>Router.domain()</code> calls should not be nested within other <code>Router.domain()</code> calls.
+</p>
+<pre><code class="language-javascript">// These routes are only accessible from 'http://example.com'
+Router.domain('example.com', () => {
+  Router.get('/users', 'users@web')
+})
+
+// These routes are only accessible from 'http://api.example.com'
+Router.domain('api.example.com', () => {
+  Router.get('/users', 'users@api')
+  Router.post('/login', 'users@login')
+})
+
+// This route is accessible from any domain
+Router.get('/', 'welcome')</code></pre>
+<p>These two domains share a similar route <code>/users</code>, so the triggered route is dependent on the domain that called it.</p>
+<p><code>api.example.com</code> has an extra route <code>/login</code>, and if it is accessed from <code>example.com</code> a <code>404</code> will be returned.</p>
+<p>There is also a route outside of the domain spec. These are routes that can be accessed by both <code>example.com</code> and <code>api.example.com</code>.</p>
+
+
+<h2>Route Resources</h2>
+<p>A route resource is a way to create a group of routes that all relate to one another. A resource takes two parameters each of which are strings.</p>
+<ul>
+  <li><code>name</code> &ndash; This is the name of the resource, it is also part of the path</li>
+  <li><code>controller</code> &ndash; This is the controller which is the name of the class with the actions predefined
+  </li>
+</ul>
+<pre><code class="language-javascript">Router.resource('photos', 'Photos')</code></pre>
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px;">Method</th>
+      <th style="width: 300px;">URI</th>
+      <th style="width: 100px;">Action</th>
+      <th style="width: 200px;">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/photos</td>
+      <td>main</td>
+      <td>photos.main</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/photos/create</td>
+      <td>create</td>
+      <td>photos.create</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/photos</td>
+      <td>store</td>
+      <td>photos.store</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/photos/:id</td>
+      <td>show</td>
+      <td>photos.show</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/photos/:id/edit</td>
+      <td>edit</td>
+      <td>photos.edit</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>/photos/:id</td>
+      <td>update</td>
+      <td>photos.update</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/photos/:id</td>
+      <td>destroy</td>
+      <td>photos.destroy</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h2>Route methods</h2>
+<ul>
+  <li><a href="#method-get">GET</a></li>
+  <li><a href="#method-post">POST</a></li>
+  <li><a href="#method-put">PUT</a></li>
+  <li><a href="#method-delete">DELETE</a></li>
+  <li><a href="#method-patch">PATCH</a></li>
+  <li><a href="#method-head">HEAD</a></li>
+  <li><a href="#method-options">OPTIONS</a></li>
+  <li><a href="#method-match">MATCH</a> &ndash; This isn't a method type, but a way to handle two or more method types
+  </li>
+  <li><a href="#method-any">ANY</a> &ndash; This isn't a method type, but a way to handle all method types</li>
+</ul>
+
+<h3 id="method-get">GET</h3>
+<pre><code class="language-javascript">Router.get('/', client => client.response.html('GET request to /'))</code></pre>
+
+<h3 id="method-post">POST</h3>
+<pre><code class="language-javascript">Router.post('/', client => client.response.html('POST request to /'))</code></pre>
+
+<h3 id="method-put">PUT</h3>
+<pre><code class="language-javascript">Router.put('/', client => client.response.html('PUT request to /'))</code></pre>
+
+<h3 id="method-delete">DELETE</h3>
+<pre><code class="language-javascript">Router.delete('/', client => client.response.html('DELETE request to /'))</code></pre>
+
+<h3 id="method-patch">PATCH</h3>
+<pre><code class="language-javascript">Router.patch('/', client => client.response.html('PATCH request to /'))</code></pre>
+
+<h3 id="method-head">HEAD</h3>
+<pre><code class="language-javascript">Router.head('/', client => client.response.setHeader('Head-Request', 'to /'))</code></pre>
+
+<h3 id="method-options">OPTIONS</h3>
+<pre><code class="language-javascript">Router.options('/', client => client.response.setHeader('Options-Request', 'to /'))</code></pre>
+
+<h3 id="method-match">MATCH</h3>
+<p>The <b>match</b> route method allows for catching two or more specific types (<code>GET</code>, <code>POST</code>, etc.)</p>
+<pre><code class="language-javascript">Router.match(['get', 'post'], '/', client => client.response.html('GET or POST request to /'))</code></pre>
+
+<h3 id="method-any">ANY</h3>
+<p>The <b>any</b> route method allows for catching any type (<code>GET</code>, <code>POST</code>, etc.)</p>
+<pre><code class="language-javascript">Router.any('/', client => client.response.html('any request to /'))</code></pre>

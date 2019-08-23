@@ -1,0 +1,53 @@
+<h1>Sessions</h1>
+<p>@horsepower/session is a way to persist data from one request to another. There is many usages for using sessions, such as when your site has users that login/logout or maybe you want to remember a shopping cart. Sessions can be used here for making data persist from one page request to another.</p>
+<h2>Configuration</h2>
+<p>Sessions need to be configured through one and optionally two configurations. The main configuration is the <code>config/session.js</code> which describes how sessions need to work. The second optional config is the <code>config/storage.js</code> config when you store the sessions using a <code>file</code> store.</p>
+<pre><code class="language-javascript">module.exports = {
+  store: 'file',
+
+  cookie: {
+  path: '/',
+    // Expire the cookie in approximately 30 days
+    expires: new Date(Date.now() + (30 * 24 * 60 * 60 * 1000))
+  }
+}</code></pre>
+<p><a href="https://www.npmjs.com/package/cookie#options-1">Cookie options</a> are required and are the options for creating the reference cookie on the client.</p>
+<p>Since the store is set to file, the default session store will be used which points to the operating systems temp directory.</p>
+<p>If you don't want sessions stored in the os's temp directory you can setup a custom location using a <a href="/docs/storage#configuration">storage configuration</a>. We need to label it as <code>session</code> with a driver type of <code>file</code>. Next we need to make sure that it points to the location of where the sessions will be stored.</p>
+<pre><code class="language-javascript">module.exports = {
+  disks: {
+    session: {
+      driver: 'file',
+      root: storagePath('framework/sessions')
+    }
+  }
+}</code></pre>
+<h2>Usage</h2>
+<p>Sessions need to be started upon every request in order to use them. Thankfully there is middleware for that we can use that will do this for us (horsepower automatically closes open sessions after the response is sent if it has not already been ended).</p>
+<p>In the following example we will assume that our website has a public facing side and a members facing side. On the members facing side we will work with sessions, and on the public side we will not.</p>
+<pre><code class="language-javascript">const { Router } = require('@horsepower/router')
+const { StartSession } = require('@horsepower/session')
+
+// These pages do not require a session, so we will not start one
+Router.get('/', 'welcome').name('welcome')
+Router.post('/register', 'register')
+
+// The pages in this group do require a session, so on every request to them
+// we will automatically start the session.
+Router.group('/member', { middleware: [StartSession] }, async () => {
+  Router.get('/', 'user@home').name('home')
+  Router.post('/login', 'user@login').name('login')
+  Router.get('/settings', 'user@settings').name('settings')
+})</code></pre>
+<p>Now with the above implemented, we can use sessions in our controller</p>
+<pre><code class="language-javascript">module.exports.login = async function (client) {
+  // Query the database for the user
+  // We will assume the user was found for this example
+  // const result = ....
+  client.session.set('user', result)
+  return client.response.redirect.to('home')
+}
+
+module.exports.home = async function (client) {
+  return client.response.render('user-home.mix')
+}</code></pre>

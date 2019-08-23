@@ -1,0 +1,89 @@
+<h1>Storage</h1>
+<p>Storage is a factory that allows for easily accessing multiple storage types. This could be a local file storage location, a cloud file storage location or even a mongodb file storage. As long as the correct driver is installed and setup you can access any file system.</p>
+<p><code>@horsepower/storage</code> comes built with three storage drivers.</p>
+<ul>
+  <li><code>file</code> &ndash; for accessing the current machines file system (or remote machine using http)</li>
+  <li><code>mongo</code> &ndash; for accessing a mongodb file system using GridFS</li>
+  <li><code>s3</code> &ndash; for accessing an s3 cloud file system</li>
+</ul>
+<h2>Configuration</h2>
+<p>Storage is configured within <code>config/storage.js</code>. Within the file there is an option labeled <code>disks</code> which is an object containing a list of disks that can be used where the key is the name of the disk.</p>
+<pre><code class="language-javascript">const { applicationPath, storagePath, env } = require('@horsepower/server')
+
+module.exports = {
+  // This is the default driver that will be used if one isn't manually mounted
+  default: env('STORAGE_DRIVER', 'local'),
+
+  disks: {
+    // This is a driver that links to "storage/app"
+    local: {
+      driver: 'file',
+      root: storagePath('app')
+    },
+    // This is a driver that links to "public"
+    public: {
+      driver: 'file',
+      root: applicationPath('public')
+    }
+  }
+}</code></pre>
+<h3>Mongo Storage Configuration</h3>
+<p>Mongodb is a built in driver that allows you to connect to your mongo server and use it as a file system using GridFS. The configuration utilizes the <code>options</code> setting in the config to connect to a mongo server. The only required option is <code>db</code> which is the database on the server to store the files.</p>
+<pre><code class="language-javascript">module.exports = {
+  disks: {
+    mongo: {
+      driver: 'mongo',
+      root: '/',
+      options: {
+        db: 'my-database', // (required)
+        user: 'root', // (optional) defaults to: ''
+        pass: 'abc123', // (optional) defaults to: ''
+        host: '123.123.123.123', // (optional) defaults to: 'localhost'
+        port: 27017 // (optional) defaults to: 27017
+      }
+    }
+  }
+}</code></pre>
+<h3>S3 Storage Configuration</h3>
+<p>The S3 driver is a built in driver that allows you to connect to S3. The configuration utilizes the <code>options</code> setting in the config to connect to the S3 server.</p>
+<pre><code class="language-javascript">module.exports = {
+  disks: {
+    amazonS3: {
+      driver: 's3',
+      root: '/',
+      bucket: 'my-bucket'
+      options: {
+        accessKeyId: 'xxxxxxxxxxxxxxxxxxxx',
+        secretAccessKey: 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+        // See the connection settings:
+        // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
+      }
+    }
+  }
+}</code></pre>
+<h2>Usage</h2>
+<p>Once all your storage drivers have been setup, storage can then be easily loaded by mounting a disk and executing the task that you would like. You can update your config settings and the driver will start working with the new settings without having to change code.</p>
+<p>Lets use this example css file located at <code>public/master.css</code></p>
+<pre><code class="language-css">body {
+  color: red;
+  background: green;
+}</code></pre>
+<p>We can then <code>mount('public')</code> and call <code>load('master.css')</code> to load the file.</p>
+<pre><code class="language-javascript">const { Storage } = require('@horsepower/storage')
+
+module.exports.main = async function (client) {
+  // See the configuration above for the location of "public".
+  let text = await Storage.mount('public').load('master.css')
+  console.log(text)
+}
+</code></pre>
+<p>It is also possible to omit <code>mount()</code> if you want to use the default driver. In this case, since the css is in the <code>public</code> directory, it will not be able to load it unless we move the file to the location of <code>mount('local')</code> since <code>local</code> is the default driver.</p>
+<pre><code class="language-javascript">const { Storage } = require('@horsepower/storage')
+
+module.exports.main = async function (client) {
+  // This uses "local" as the driver because it is set as the default.
+  // If no file has been saved to the drivers location called "master.css",
+  // then this file will not load anything.
+  let text = await Storage.load('master.css')
+  console.log(text)
+}</code></pre>

@@ -1,0 +1,28 @@
+{
+  "name": "horsepower",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "start:pm2": "pm2 start ./ecosystem.config.js",
+    "gulp:dev": "gulp build:watch",
+    "gulp:prod": "gulp build --production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@horsepower/router": "^1.0.0",
+    "@horsepower/server": "^1.0.0",
+    "@horsepower/storage": "^1.0.0",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.5",
+    "@types/gulp-concat": "^0.0.32",
+    "@types/gulp-sass": "^4.0.0",
+    "@types/gulp-typescript": "^2.13.0",
+    "@types/gulp-uglify": "^3.0.6",
+    "@types/node": "^11.13.17"
+  }
+}

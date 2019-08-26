@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500');
+// @import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500');
 @import 'framework/variables';
 
 * {
@@ -8,7 +8,7 @@
 :root {
   font-size: $core-font-size;
   font-weight: $core-font-weight;
-  font-family: 'Roboto', sans-serif;
+  // font-family: 'Roboto', sans-serif;
   letter-spacing: $core-letter-spacing;
 }
 

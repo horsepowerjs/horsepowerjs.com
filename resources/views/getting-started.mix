@@ -65,7 +65,8 @@ sudo vim /etc/nginx/sites-available/example.com</code></pre>
   server_name example.com api.example.com;
   listen 80;
 
-  # Setup the proxy # This will forward all requests to the horsepower http server
+  # Setup the proxy
+  # This will forward all requests to the horsepower http server
   # and then it will relay the servers response back to the client
   location / {
     proxy_pass http://127.0.0.1:5000;

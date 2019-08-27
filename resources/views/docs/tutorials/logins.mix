@@ -1,0 +1,101 @@
+<h1>User Logins</h1>
+<p>Many websites have a members area that require specific credentials to access this location. Horsepower makes logins simple.</p>
+<p>In our login system, we will make four routes:</p>
+<ul>
+  <li>A route to display a login form</li>
+  <li>A route to log the user out of their account</li>
+  <li>A route to process the user login</li>
+  <li>A route to display the users member area</li>
+</ul>
+<h2>The routes</h2>
+<pre><code class="language-javascript">const { Router } = require('@horsepower/router')
+const { StartSession } = require('@horsepower/session')
+
+// This route will render the login page for our user
+Router.get('/login', client => client.response.render('login.mix')).name('login')
+
+// The following routes need to have a session started when executed
+// so we will put them within a group that will start the session
+// on each request made to that specific route.
+Router.group('/', { middleware: [StartSession] }, () => {
+
+  // We will create a login route to validate the users login.
+  // If the login is successful we will redirect the user to the "user-home" route.
+  // If the login is not successful we will redirect the user back to the login page.
+  Router.post('/login', 'User@login').name('login-handle')
+
+  // Here we will process the users logout this will destroy the session.
+  Router.post('/logout', 'User@logout').name('logout-handle')
+
+  // This will render the users home page with information about that user.
+  Router.get('/home', client => client.response.render('home.mix')).name('user-home')
+})
+</code></pre>
+<h2>The controllers</h2>
+<p>We have two controllers here, one will handle the login for the user and the other will handle the logout for the user.</p>
+<h3>Login controller</h3>
+<p>The login controller will get the users input from the login form, it will then check the database to see if the user exists with those credentials. If the user exists a user will be returned, otherwise nothing will be returned.</p>
+<p>If nothing is returned, then we will redirect the user back to the login page. Otherwise, we will create the session data and redirect the user to the members area.</p>
+<pre><code class="language-javascript">const { DB } = require('@horsepower/mysql')
+
+module.exports.login = async function (client) {
+  // Get the username and password
+  let username = client.data.post('username')
+  let password = client.data.post('password')
+
+  // Search the database for the user using the credentials that were
+  // provided by the user from the login page.
+  let user = await DB.table('users').where('username', username).where('password', password).first()
+
+  // If the user was not found redirect the user back to the login page.
+  if(!user) return client.response.redirect.to('login')
+
+  // Since we have gotten this far, we must have gotten a user back
+  // so we will set the session information for the current user
+  client.session.set('id', user.id)
+  client.session.set('username', user.username)
+
+  // Now lets redirect the user to their member's area
+  // where we can utilize the session information we just set
+  return client.response.redirect.to('user-home')
+}
+</code></pre>
+<h3>Logout controller</h3>
+<p>The logout controller is really simple, all it does is destroy the session and then redirects the user back to the login page.</p>
+<pre><code class="language-javascript">module.exports.logout = async function (client) {
+  // The user requested to be logged out, so we won't do any validation
+  // here, we will just destroy the session.
+  await client.session.destroy()
+
+  // Now we will redirect the user to the login form
+  return client.response.redirect.to('login')
+}
+</code></pre>
+<h2>The views</h2>
+<p>The views will display two things for us, one is the login form so the user can login to their account, and the other is the members area displaying information that relates to them.</p>
+<h3>The login view</h3>
+<p>Lets create the login view located at <code>resources/views/login.mix</code>, this will show the login form to the user so they can enter in their information.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;User Login&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;form method="post" action="{{'\{\{route(\'login-handle\')\}\}'}}"&gt;
+      &lt;p&gt;Username: &lt;input type="text" name="username" placeholder="What is your username?"&gt;&lt;/p&gt;
+      &lt;p&gt;Password: &lt;input type="password" name="password" placeholder="What is your password?"&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;input type="submit" value="Login"&gt;&lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h3>The members view</h3>
+<p>The members view will show information to the user that relates to them, this could be anything that you would like as it all depends on what your website is.</p>
+<p>Here we will create a view located at <code>resources/views/home.mix</code>, this will show the users home page when they are logged into their account.</p>
+<p>As you might see, we can access the users username with <code>{{'\{\{$session.username\}\}'}}</code>, this is accessing the session data associated with this user and grabbing the username that was set in the login controller.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;User Member Area&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome {{'\{\{$session.username\}\}'}}&lt;/h1&gt;
+    &lt;p&gt;Welcome to your members area where this page is all about you!&lt;/p&gt;
+    &lt;p&gt;&lt;a href="{{'\{\{route(\'logout-handle\')\}\}'}}"&gt;Logout&lt;/a&gt;&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>

@@ -61,6 +61,7 @@ body {
 
   p {
     line-height: 2rem;
+    margin-block-end: 2em;
   }
 
   kbd {
@@ -78,6 +79,14 @@ body {
 
   pre:not(:last-child) {
     margin-bottom: 16px;
+  }
+
+  .content {
+    & ol,
+    & ul {
+      margin-block-start: 0;
+      margin-block-end: 2em;
+    }
   }
 
   .pure-block {

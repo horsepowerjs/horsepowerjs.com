@@ -1,4 +1,7 @@
 <extends file="main">
+  <block name="title">
+    Hello
+  </block>
   <block name="content">
     <section class="section white">
       <div class="pure-container content">

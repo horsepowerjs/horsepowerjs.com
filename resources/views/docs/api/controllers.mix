@@ -1,0 +1,44 @@
+<h1>Controllers</h1>
+<p>A controller is where the magic happens on each request since all routes have a controller attached to them. A controller can be as simple as rendering a template to as complex as processing lots of data from a database, file, resource or anything else you can think-up really.</p>
+<h2>Controller File</h2>
+<p>A controller file is a file located somewhere within the <code>/app/controllers</code> directory of your project. This file can be in sub-folders to make the directory structure easier to read.</p>
+<p>The controller file can be structured in two different ways, each way is supported by the horsepower server.</p>
+<ol>
+  <li><strong>Class based</strong> &ndash; contains methods and a single exported class</li>
+  <li><strong>Function based</strong> &ndash; contains multiple exported functions</li>
+</ol>
+<p class="warn"><strong>Note:</strong> All controllers can optionally be asynchronous if needed.</p>
+<h3>Class Based</h3>
+<p>A class based controller file exports a single class, with each method as a controller. When the route is accessed the class is instantiated, and the requested method is executed.</p>
+<pre><code class="language-javascript">module.exports = class {
+  async main(client) {
+    // Controller body
+  }
+
+  async secondController(client) {
+    // Controller body
+  }
+}</code></pre>
+
+<h3>Function Based</h3>
+<p>A function based controller file exports multiple functions where each function is a controller. When the route is accessed nothing is instantiated, and the requested function is executed.</p>
+<pre><code class="language-javascript">module.exports.main = async function(client) {
+  // Controller body
+}
+
+module.exports.secondController = async function(client) {
+  // Controller body
+}</code></pre>
+
+<h2>Resource Controller</h2>
+<p>A resource controller is nothing special, other than that it's methods/functions are predefined and relate to a route (See <a href="/docs/api/routing#route-resources">Route Resources</a> for more information on the routing aspect).</p>
+<p>A full resource controller will contain all of the following methods (All of which are optional based on the ones you need).</p>
+<pre><code class="language-javascript">module.exports = class {
+  async main(client) { }
+  async create(client) { }
+  async store(client) { }
+  async show(client) { }
+  async edit(client) { }
+  async update(client) { }
+  async destroy(client) { }
+}</code></pre>

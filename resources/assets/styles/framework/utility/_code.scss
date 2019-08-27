@@ -17,9 +17,10 @@ pre {
 
 code {
   font-family: monospace;
-  border: solid 1px $secondary-color;
-  background-color: lighten($secondary-color, 42%);
-  color: $secondary-color;
+  // border: solid 1px $secondary-color;
+  // background-color: lighten($secondary-color, 42%);
+  color: #ff5c03;
+  // color: map-get($additional-colors, '.indigo');
   padding: 2px 4px;
-  font-size: 0.8em;
+  // font-size: 0.8em;
 }

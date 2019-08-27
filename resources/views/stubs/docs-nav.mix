@@ -1,18 +1,19 @@
 <ul>
   <li><span class="pure-text--weight-bold">API</span>
     <ul>
-      <li><a href="/docs/routing">Routing</a></li>
-      <li><a href="/docs/middleware">Middleware</a></li>
-      <li><a href="/docs/storage">Storage</a></li>
-      <li><a href="/docs/sessions">Sessions</a></li>
-      <li><a href="/docs/mysql">MySQL</a></li>
+      <li><a href="/docs/api/routing">Routing</a></li>
+      <li><a href="/docs/api/controllers">Controllers</a></li>
+      <li><a href="/docs/api/middleware">Middleware</a></li>
+      <li><a href="/docs/api/storage">Storage</a></li>
+      <li><a href="/docs/api/sessions">Sessions</a></li>
+      <li><a href="/docs/api/mysql">MySQL</a></li>
     </ul>
   </li>
   <li><span class="pure-text--weight-bold">Tutorials</span>
     <ul>
-      <li><a href="">File Uploads</a></li>
-      <li><a href="">User Logins</a></li>
-      <li><a href="">Plugins</a></li>
+      <li><a href="/docs/tutorials/uploads">File Uploads</a></li>
+      <li><a href="/docs/tutorials/logins">User Logins</a></li>
+      <!-- <li><a href="/docs/tutorials/uploads">Plugins</a></li> -->
     </ul>
   </li>
   <csrf></csrf>

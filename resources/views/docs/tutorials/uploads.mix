@@ -1,0 +1,81 @@
+<h1>File Uploads</h1>
+<p>Uploading content from your users browser to your server can be a tricky task, however, horsepower makes it easy to do this by allowing you to use a storage driver.</p>
+<p>To make a minimalist upload application, we will need to create a few things: two mix files and one controller. The mix files will render a form and a success page, while the controller will process the upload request.</p>
+<h2>The Routes</h2>
+<p>We will start by modifying our routes file, lets define three routes that will handle a file upload, these routes will do the following:</p>
+<ul>
+  <li>Render a page to display a form</li>
+  <li>Process the file upload</li>
+  <li>Render a page to display a success message</li>
+</ul>
+<pre><code class="language-javascript">const { Router } = require('@horsepower/router')
+
+// Create an upload group to contain the routes within a group
+// to help separate the the uploads from the rest of the app.
+Router.group('/upload', () => {
+
+  // This route will display the form for uploading
+  // Path: GET /upload
+  Router.get('/', client => client.response.render('upload.mix')).name('upload-form')
+
+  // This route will handle the processing of the file.
+  // Path: POST /upload/handle
+  Router.post('/handle', 'upload@handle').name('upload-handler')
+
+  // This route will display the success page.
+  // Path: GET /upload/success
+  Router.get('/success', client => client.response.render('success.mix')).name('upload-success')
+})
+</code></pre>
+<h2>The Upload Form</h2>
+<p>Lets create a <code>mix</code> file located at <code>resources/views/upload.mix</code> that will display a form when the route is accessed allowing the user to upload an image by selecting one from the their own computer.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Upload File&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;form method="post" action="{{'\{\{route(\'upload-handler\')\}\}'}}" enctype="multipart/form-data"&gt;
+      &lt;p&gt;&lt;input type="file" name="image" accept="image/*" required&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;input type="submit" value="Upload Image"&gt;&lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p class="warn">Remember to add the <code>enctype="multipart/form-data"</code> attribute to your form tag otherwise the file will not be sent to the server.</p>
+<h2>The Upload Handler</h2>
+<p>The storage driver has a built in disk called <code>tmp</code> that points to the operating system's <b>tmp directory</b>. We will use that here to move the file from the <b>tmp directory</b> to the actual location of where we want the file to be stored.</p>
+<p class="warn">There are multiple commands that move a file from one storage driver to another. The best one to use when uploading a file is <code>moveFrom()</code>, as this will also remove the file from the <b>source directory</b>. Using <code>copyFrom()</code> will
+  keep the file within the <b>source directory</b>.</p>
+<pre><code class="language-javascript">const path = require('path')
+const { Storage } = require('@horsepower/storage')
+
+// module.exports.main = ...
+
+module.exports.handle = async function (client) {
+  // Get the file information from the file upload
+  // This is just information about where the file is
+  // located on the server and not the actual file itself.
+  let img = client.data.files('image')
+
+  // If there was no file attached to the request
+  // redirect the user back to the upload form.
+  if (!img) return client.response.to('upload-form')
+
+  // This will move the file from tmp storage to the location
+  // of where we want to actually store the file. In this case,
+  // we want to store the file in local storage.
+  await Storage.mount('local').moveFrom('tmp', img.tmpStoragePath, path.join('test', img.filename))
+
+  // Redirect the user to a success page
+  return client.response.redirect.to('upload-success')
+}
+
+// module.exports.success = ...</code></pre>
+<h2>The Success Page</h2>
+<p>Once the upload completes, we will let the user know by rendering a page that lets the user know that their upload completed successfully. The page will also display a link that will allow the user to upload another image.</p>
+<p>Create this simple <code>mix</code> file located at <code>resources/views/success.mix</code> to show the success message to the user.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Upload Success&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Success&lt;/h1&gt;
+    &lt;p&gt;Your file was successfully uploaded!&lt;/p&gt;
+    &lt;p&gt;&lt;a href="{{'\{\{route(\'upload-form\')\}\}'}}"&gt;Upload another file&lt;/a&gt;&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>

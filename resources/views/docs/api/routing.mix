@@ -1,5 +1,5 @@
 <h1>Routing</h1>
-<p><b>Routing</b> refers to how an application’s endpoints (URIs) respond to client requests.</p>
+<p><b>Routing</b> refers to how an application’s endpoints (URIs) respond to a client's request. The router is the main entry point for any horsepower application, without routes no server requests can be handled.</p>
 <pre><code class="language-javascript">const { Router } = require('horsepower')
 
 Router.get('/', client => client.response.html('Hello World'))

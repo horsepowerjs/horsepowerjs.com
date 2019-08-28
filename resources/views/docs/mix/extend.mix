@@ -1,0 +1,11 @@
+<h1>Extend</h1>
+<p><code>extends</code> allows you to extend a parent file. The parent file must have one or more empty <code><a href="/docs/mix/block">blocks</a></code>. These blocks within the parent will then be replaced from blocks within the child.</p>
+<p>An empty extends block will look something like this. Within it, you will place your blocks.</p>
+<pre><code class="language-html">&lt;extends file="main"&gt;
+
+&lt;/extends&gt;
+</code></pre>
+
+<h2>Using an extends file</h2>
+<p>Once the extends file is created and it extends a parent file, it can be loaded. When loading a mix file you should call the child when rendering, calling the parent will not render the correct child.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.render('child.mix'))</code></pre>

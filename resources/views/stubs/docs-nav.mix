@@ -9,6 +9,26 @@
       <li><a href="/docs/api/mysql">MySQL</a></li>
     </ul>
   </li>
+  <li><span class="pure-text--weight-bold">Mix</span>
+    <ul>
+      <li><a href="/docs/mix">Introduction</a></li>
+      <li><a href="/docs/mix/extend">Extend</a></li>
+      <li><a href="/docs/mix/block">Block</a></li>
+      <li><a href="/docs/mix/include-require">Include/Require</a></li>
+      <li><a href="/docs/mix/case">Case</a></li>
+      <li><a href="/docs/mix/debug">Debug</a></li>
+      <li><a href="/docs/mix/each">Each</a></li>
+      <li><a href="/docs/mix/for">For</a></li>
+      <li><a href="/docs/mix/if">If</a></li>
+      <li><a href="/docs/mix/lang">Lang</a></li>
+    </ul>
+  </li>
+  <li><span class="pure-text--weight-bold">CLI</span>
+    <ul>
+      <li><a href="/docs/cli/make">Make</a></li>
+      <li><a href="/docs/cli/package">Package</a></li>
+    </ul>
+  </li>
   <li><span class="pure-text--weight-bold">Tutorials</span>
     <ul>
       <li><a href="/docs/tutorials/uploads">File Uploads</a></li>

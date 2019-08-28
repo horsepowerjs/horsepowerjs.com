@@ -1,10 +1,7 @@
 const { Router } = require('@horsepower/router')
 
-Router.get('/', 'welcome').name('welcome')
-Router.get('/getting-started', client => client.response.render('getting-started.mix')).name('getting-started')
-Router.get('/docs', client => client.response.render('documentation.mix')).name('docs')
+Router.get('/', client => client.response.cached('welcome.mix', 3600)).name('welcome')
+Router.get('/getting-started', client => client.response.cached('getting-started.mix', 3600)).name('getting-started')
+Router.get('/docs', client => client.response.cached('documentation.mix', 3600)).name('docs')
+// Router.get('/docs/mix', client => client.response.cached('documentation.mix', 3600)).name('docs')
 Router.get(/\/docs\/.+/, client => client.response.render('documentation.mix'))
-// Router.group('/docs', () => {
-//   Router.get('/routing', client => client.response.render('documentation.mix')).name('docs-routing')
-//   Router.get('/routing', client => client.response.render('documentation.mix')).name('docs-routing')
-// })

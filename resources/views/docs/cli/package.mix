@@ -1,0 +1,23 @@
+<h1>Package</h1>
+<p>Manage horsepower packages for your project</p>
+<h2>List</h2>
+<p>Gets a list of supported packages for the horsepower server. These packages may or may not be installed in your project.</p>
+<pre><code class="language-bash">hp package:list
+
+# Same as:
+npm search @horsepower --json
+</code></pre>
+<h2>Add</h2>
+<p>Adds a horsepower package from npm to your project and installs the package and its dependencies.</p>
+<pre><code class="language-bash">hp package:add &lt;package-name&gt;
+
+# Same as:
+npm i -s @horsepower/package-name
+</code></pre>
+<h2>Remove</h2>
+<p>Removes a horsepower package from your project and all of its dependencies</p>
+<pre><code class="language-bash">hp package:remove &lt;package-name&gt;
+
+# Same as:
+npm rm -s @horsepower/package-name
+</code></pre>

@@ -1,0 +1,28 @@
+<h1>For</h1>
+<p>The for statement allows you to loop from a starting number to an ending number inclusively or exclusively and forwards or backwards.</p>
+<h2>For ... thru</h2>
+<p>For <code>thru</code> or <code>through</code> allows you to loop from a starting number and loop to the ending number inclusively.</p>
+<pre><code class="language-html">&lt;for :="i from 0 thru 5"&gt;
+  &lt;p&gt;{{'\{\{$i\}\}'}}&lt;/p&gt;
+&lt;/for&gt;
+</code></pre>
+<pre><code class="language-html">&lt;p&gt;0&lt;/p&gt;
+&lt;p&gt;1&lt;/p&gt;
+&lt;p&gt;2&lt;/p&gt;
+&lt;p&gt;3&lt;/p&gt;
+&lt;p&gt;4&lt;/p&gt;
+&lt;p&gt;5&lt;/p&gt;
+</code></pre>
+
+<h2>For ... to</h2>
+<p>For <code>to</code> allows you to loop from a starting number and loop to the ending number exclusively.</p>
+<pre><code class="language-html">&lt;for :="i from 0 to 5"&gt;
+  &lt;p&gt;{{'\{\{$i\}\}'}}&lt;/p&gt;
+&lt;/for&gt;
+</code></pre>
+<pre><code class="language-html">&lt;p&gt;0&lt;/p&gt;
+&lt;p&gt;1&lt;/p&gt;
+&lt;p&gt;2&lt;/p&gt;
+&lt;p&gt;3&lt;/p&gt;
+&lt;p&gt;4&lt;/p&gt;
+</code></pre>

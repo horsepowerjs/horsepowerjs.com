@@ -1,0 +1,29 @@
+<h1>Each</h1>
+<p>The each statement allows you to loop over an array of items. When using data such as the following, you can loop over each item.</p>
+<pre><code class="language-javascript">Router.get('/', client.response.render('each.mix', {
+  items: ['a', 'b', 'c']
+}))
+</code></pre>
+
+<h2>Get a Value</h2>
+<p>An each can be used where only the value is retrieved into a variable like this:</p>
+<pre><code class="language-html">&lt;each :="value in {{'\{\{$items\}\}'}}"&gt;
+  &lt;p&gt;{{'\{\{$value\}\}'}}&lt;/p&gt;
+&lt;/each&gt;
+</code></pre>
+<p>When executed the following output will be generated.</p>
+<pre><code class="language-html">&lt;p&gt;a&lt;/p&gt;
+&lt;p&gt;b&lt;/p&gt;
+&lt;p&gt;c&lt;/p&gt;
+</code></pre>
+
+<h2>Get a Key and Value</h2>
+<p>A key can also be used, the key and value just need to be placed withing brackets separated by a coma.</p>
+<pre><code class="language-html">&lt;each :="[key, value] in {{'\{\{$items\}\}'}}"&gt;
+  {{'\{\{$key\}\}: \{\{$value\}\}'}}
+&lt;/each&gt;</code></pre>
+<p>When executed the following output will be generated.</p>
+<pre><code class="language-html">&lt;p&gt;0: a&lt;/p&gt;
+&lt;p&gt;1: b&lt;/p&gt;
+&lt;p&gt;2: c&lt;/p&gt;
+</code></pre>

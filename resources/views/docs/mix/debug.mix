@@ -1,0 +1,32 @@
+<h1>Debug</h1>
+<p>Debug allows you to output data to the console. By default when you are not in production mode debugging will not output anything.</p>
+
+<h2>Log</h2>
+<p>When used output will be written to the console using <code>console.log()</code></p>
+<pre><code class="language-html">&lt;debug log="Log a message or variable"&gt;&lt;/debug&gt;</code></pre>
+
+<h2>Info</h2>
+<p>When used output will be written to the console using <code>console.info()</code></p>
+<pre><code class="language-html">&lt;debug info="Log a message or variable"&gt;&lt;/debug&gt;</code></pre>
+
+<h2>Warning</h2>
+<p>When used output will be written to the console using <code>console.warn()</code></p>
+<pre><code class="language-html">&lt;debug warn="Log a message or variable"&gt;&lt;/debug&gt;</code></pre>
+
+<h2>Error</h2>
+<p>When used output will be written to the console using <code>console.error()</code></p>
+<pre><code class="language-html">&lt;debug error="Log a message or variable"&gt;&lt;/debug&gt;</code></pre>
+
+<h1>No Eval</h1>
+<p>The <code>no-eval</code> flag will disable evaluation of variables and output the text as is.</p>
+<pre><code class="language-html">&lt;debug no-eval log="{{'\{\{$a\}\} == \{\{$b\}\}'}}"&gt;&lt;/debug&gt;</code></pre>
+<pre><code class="language-text"># The result with no-eval:
+{{'\{\{$a\}\} == \{\{$b\}\}'}}
+
+# The result when omitting no-eval:
+false
+</code></pre>
+
+<h1>Production</h1>
+<p>The <code>prod</code> flag will allow output to be written to the console even in a production setting.</p>
+<pre><code class="language-html">&lt;debug prod log="Log a message or variable in a production setting"&gt;&lt;/debug&gt;</code></pre>

@@ -64,6 +64,11 @@ body {
     margin-block-end: 2em;
   }
 
+  pre {
+    margin-block-end: 2em !important;
+    margin-block-start: 0 !important;
+  }
+
   kbd {
     display: inline-block;
     margin: 0 .1em;
@@ -275,6 +280,8 @@ footer {
   top: 80px;
   margin: 0;
   padding: 0;
+  max-height: 90vh;
+  overflow: auto;
 
   & > li {
     &  a {

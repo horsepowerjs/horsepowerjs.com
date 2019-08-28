@@ -10,7 +10,7 @@
           <h2>Command Line Tool</h2>
           <p>Horsepower can be installed using the command line tool, and having installed all of the prerequisites,
             creating
-            an application is very easy using <code>horsepower-cli</code></p>
+            an application is very easy using <code>@horsepower/cli</code></p>
           <pre><code class="language-bash">npm install -g @horsepower/cli</code></pre>
           <p>Next all that needs to be done is to run the <code>new</code> command to create a new project</p>
           <pre><code class="language-bash">hp new hello-world</code></pre>

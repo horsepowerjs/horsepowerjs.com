@@ -1,0 +1,33 @@
+<h1>Include</h1>
+<p>Including a file allows you to inject html from one file into the current location of the include. If the file is not found the block gets replaced with nothing aka an empty document fragment.</p>
+<p>Lets assume you have navigation on many pages, we could include that navigation using a single line in multiple files like this:</p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;include file="/stubs/my-nav"&gt;&lt;/include&gt;
+&lt;/nav&gt;</code></pre>
+<p>Then if we had the content of that include looking something like this:</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href="/home"&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/profile"&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/settings"&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/logout"&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p>When it gets rendered, the output would then look like this as if the include was never added like this:</p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/home"&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/profile"&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/settings"&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/logout"&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+
+<h1>Require</h1>
+<p>Require is nearly exactly the same as include, other than the fact that the file <strong>MUST</strong> exist otherwise an error will be thrown.</p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;require file="/stubs/my-nav"&gt;&lt;/require&gt;
+&lt;/nav&gt;</code></pre>
+<h1>Fallback</h1>
+<p>Both <code>include</code> and <code>require</code> allow for a fallback in the case that if the main file is not found a fallback file will be loaded. If using <code>require</code> and the fallback file cannot be found an error will still be thrown.</p>
+<pre><code class="language-html">&lt;require file="/welcome" default="/home"&gt;&lt;/require&gt;
+&lt;include file="/welcome-footer" default="/footer"&gt;&lt;/include&gt;
+</code></pre>

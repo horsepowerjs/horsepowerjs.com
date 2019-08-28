@@ -1,0 +1,35 @@
+<h1>Block</h1>
+<p>A block is a section of html that is used in an extends mix file. It is like a template that will replace the block within the parent with matching names.</p>
+<h2>Parent</h2>
+<p>A parent file has one or more block elements, these elements will be replaced by elements within the child. We will create a parent file called <code>main.mix</code>. This will contain a block called <code>content</code>, which will also be found in the child except that the child's element will contain html.</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Horsepower&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;block name="content"&gt;&lt;/block&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2>Child</h2>
+<p>A child file needs to extend a parent file, within the extends element will be one or more block elements. As you can see here we have a block element that has a name that is the same as the name within the parent and it also extends the file <code>main</code> (The <code>.mix</code> extension is optional). The block in the parent will then be replaced with this block. We will call this file <code>child.mix</code></p>
+<pre><code class="language-html">&lt;extends file="main"&gt;
+  &lt;block name="content"&gt;
+    &lt;p&gt;Welcome to my world!&lt;p&gt;
+  &lt;/block&gt;
+&lt;/extends&gt;</code></pre>
+<h2>Result</h2>
+<p>When we run this code we will want to run the child file instead of the parent file.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.render('child.mix'))</code></pre>
+<p>After the code is executed we can see that the block has been replaced with the child element and we get html resulting in this.</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Horsepower&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;Welcome to my world!&lt;p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>

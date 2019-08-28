@@ -1,0 +1,37 @@
+<h1>Case</h1>
+<p>Case statements are the same as javascript switch statements. However unlike javascript switch statements they do not use a strict equality comparison due to the fact that html evaluates attributes as strings. So comparing <code>'1' == 1</code> evaluates as <code>true</code> with mix <code>case</code> statements whereas in javascript it would evaluate to <code>false</code> using a switch.</p>
+
+<pre><code class="language-javascript">Router.get('/', client.response.render('case.mix', {
+  myVar: Math.floor(Math.random() * 15)
+}))</code></pre>
+
+<h2>case element</h2>
+<p>The case element starts the block of a case statement. It contains a evaluation attribute of <code>:</code>.</p>
+<pre><code class="language-html">&lt;case :="{{'\{\{$myVar\}\}'}}"&gt;&lt;/case&gt;</code></pre>
+
+<h2>when element</h2>
+<p>The when element is used to evaluate the value against the case statement. It looks nearly identical to the case element except that is it called <code>when</code>.</p>
+<pre><code class="language-html">&lt;when :="10"&gt;
+  &lt;span&gt;Display when case statement is 10&lt;/span&gt;
+&lt;/when&gt;</code></pre>
+
+<h2>default element</h2>
+<p>The default element has no attributes, and it will display if none of the the when elements evaluate to true.</p>
+<pre><code class="language-html">&lt;default&gt;
+  &lt;span&gt;Nothing matched the case statement&lt;/span&gt;
+&lt;/default&gt;</code></pre>
+
+<h2>Full Example</h2>
+<pre><code class="language-html">
+  &lt;case :="{{'\{\{$myVar\}\}'}}"&gt;
+    &lt;when :="1"&gt;
+      &lt;p&gt;$myVar is equal to 1!&lt;/p&gt;
+    &lt;/when&gt;
+    &lt;when :="2"&gt;
+      &lt;p&gt;$myVar is equal to 2!&lt;/p&gt;
+    &lt;/when&gt;
+    &lt;default&gt;
+      &lt;p&gt;$myVar does not contain a valid value.&lt;/p&gt;
+    &lt;/default&gt;
+  &lt;/case&gt;
+</code></pre>

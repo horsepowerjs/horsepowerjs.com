@@ -1,0 +1,14 @@
+<h1>Make</h1>
+<p>Make allows you to make different types of files that can be used within your project.</p>
+<h2>Controller</h2>
+<p>Create a controller that only has a <code>main()</code>.</p>
+<pre><code class="language-bash">hp make:controller &lt;controller-name&gt;</code></pre>
+<h3>Resource</h3>
+<p>Create a controller that has all methods.</p>
+<pre><code class="language-bash">hp make:controller &lt;controller-name&gt; --resource</code></pre>
+<h3>API</h3>
+<p>Create a controller that has everything a resource has except for <code>create()</code> and <code>edit()</code> methods.</p>
+<pre><code class="language-bash">hp make:controller &lt;controller-name&gt; --api</code></pre>
+<h2>Middleware</h2>
+<p>Create middleware</p>
+<pre><code class="language-bash">hp make:middleware &lt;middleware-name&gt;</code></pre>

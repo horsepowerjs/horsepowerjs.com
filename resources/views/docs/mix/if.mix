@@ -1,0 +1,39 @@
+<h1>If</h1>
+<p>An if statement will allow for evaluating clauses when the first clause evaluates to <code>true</code> that block will be displayed.</p>
+<pre><code class="language-html">&lt;if :="{{'\{\{$i\}\}'}} == 0"&gt;
+  &lt;span&gt;$i is equal to 0&lt;/span&gt;
+&lt;/if&gt;
+&lt;elif :="{{'\{\{$i\}\}'}} == 1"&gt;
+  &lt;span&gt;$i is equal to 1&lt;/span&gt;
+&lt;/elif&gt;
+&lt;elif :="{{'\{\{$i\}\} == 2 && \{\{$j\}\}'}} == 3"&gt;
+  &lt;span&gt;$i is equal to 2 and $j is equal to 3&lt;/span&gt;
+&lt;/elif&gt;
+&lt;else&gt;
+  &lt;span&gt;No matches were found&lt;/span&gt;
+&lt;/else&gt;
+</code></pre>
+
+<h2>if</h2>
+<p>The <code>if</code> element opens an <code>if/elif/else</code> block. It takes a single attribute that needs to evaluate to <code>true</code> or <code>false</code>.</p>
+<pre><code class="language-html">&lt;if :="{{'\{\{$i\}\}'}} == 0"&gt;
+  &lt;span&gt;$i is equal to 0&lt;/span&gt;
+&lt;/if&gt;
+</code></pre>
+
+<h2>elif</h2>
+<p>The optional <code>elif</code> element must follow an <code>if</code> or an <code>elif</code> element. If it doesn't it will be removed and will not be evaluated.</p>
+<pre><code class="language-html">&lt;if&gt;...&lt;/if&gt;
+&lt;elif :="{{'\{\{$i\}\}'}} == 0"&gt;
+  &lt;span&gt;$i is equal to 0&lt;/span&gt;
+&lt;/elif&gt;
+</code></pre>
+
+<h2>else</h2>
+<p>The optional <code>else</code> element must come last in an <code>if/elif/else</code> block and must follow an <code>if</code> or an <code>elif</code> element. If it doesn't it will be removed and will not be evaluated. An <code>else</code> block will always evaluate to <code>true</code> when all other blocks evaluate to <code>false</code>.</p>
+<pre><code class="language-html">&lt;if&gt;...&lt;/if&gt;
+&lt;elif&gt;...&lt;/elif&gt;
+&lt;else&gt;
+  &lt;span&gt;No matches were found&lt;/span&gt;
+&lt;/else&gt;
+</code></pre>

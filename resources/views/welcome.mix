@@ -2,7 +2,7 @@
   <block name="content">
     <div class="hero blue-header"></div>
     <div class="heading">
-      <img src="/images/logo2.svg" alt="Horsepower Logo" />
+      <img src="/images/logo.svg" alt="Horsepower Logo" />
       <div class="horse-shadow"></div>
     </div>
     <section class="section white">

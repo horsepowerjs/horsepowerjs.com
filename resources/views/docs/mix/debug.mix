@@ -17,7 +17,7 @@
 <p>When used output will be written to the console using <code>console.error()</code></p>
 <pre><code class="language-html">&lt;debug error="Log a message or variable"&gt;&lt;/debug&gt;</code></pre>
 
-<h1>No Eval</h1>
+<h1>No eval</h1>
 <p>The <code>no-eval</code> flag will disable evaluation of variables and output the text as is.</p>
 <pre><code class="language-html">&lt;debug no-eval log="{{'\{\{$a\}\} == \{\{$b\}\}'}}"&gt;&lt;/debug&gt;</code></pre>
 <pre><code class="language-text"># The result with no-eval:

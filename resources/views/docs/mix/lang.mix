@@ -1,0 +1,26 @@
+<h1>Lang</h1>
+<p>The <code>lang</code> element will allow for the usage of localization within your app. Which can be setup using language files which are in the form of json files.</p>
+
+<h2>Json file</h2>
+<p>The <code>json</code> files for localization are located at <code>/resources/lang/&lt;locale&gt;/file.json</code>. To change the locale for each user the user can be redirected to <code>/lang/&lt;locale&gt;</code> or it can also be set using javascript with <code>client.setLocale('en')</code>.</p>
+<pre><code class="language-javascript">{
+  "title": "Hello World",
+  "navTitles": {
+    "home": "Home",
+    "profile": "Profile"
+  }
+}</code></pre>
+
+<h2>key</h2>
+<p>The <code>lang</code> element takes a <code>key</code> attribute, which is formatted using "<code>.</code>" notation where the first value is the filename (without the extension) followed by the path to the key within the file.</p>
+<p class="warn"><strong>Note:</strong> The filename portion allows for <code>/</code> if the language file is one or more sub-directories deep. This means that the key could potentially look like <code>key="nav/public.primary.home"</code></p>
+<pre><code class="language-html">&lt;lang key="filename.navTitles.home"&gt;&lt;/lang&gt;</code></pre>
+<p>The file that gets loaded is based on the users lang setting, so based on the snipped above, if the lang is set to <code>en</code> then the file that gets loaded is <code>/resources/lang/en/filename.json</code>. If the users lang is set to <code>fr</code> than the file that gets loaded is <code>/resources/lang/fr/filename.json</code></p>
+
+<h2>tag</h2>
+<p>By default the <code>lang</code> element gets converted to a <code>span</code>, if another element type is desired, the <code>tag</code> attribute may be passed with the desired tag type.</p>
+<pre><code class="language-html">&lt;lang key="filename.itemKey" tag="p"&gt;&lt;/lang&gt;</code></pre>
+
+<h2>default</h2>
+<p>If for any reason the translation can not be found, such as the file doesn't exist for that language or the key doesn't exist for that language, than there is the fallback <code>default</code> attribute which takes the default text to be displayed.</p>
+<pre><code class="language-html">&lt;lang key="filename.itemKey" default="The translation could not be found."&gt;&lt;/lang&gt;</code></pre>

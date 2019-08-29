@@ -5,7 +5,7 @@
 }))
 </code></pre>
 
-<h2>Get a Value</h2>
+<h2>Values</h2>
 <p>An each can be used where only the value is retrieved into a variable like this:</p>
 <pre><code class="language-html">&lt;each :="value in {{'\{\{$items\}\}'}}"&gt;
   &lt;p&gt;{{'\{\{$value\}\}'}}&lt;/p&gt;
@@ -17,7 +17,7 @@
 &lt;p&gt;c&lt;/p&gt;
 </code></pre>
 
-<h2>Get a Key and Value</h2>
+<h2>Key value pair</h2>
 <p>A key can also be used, the key and value just need to be placed withing brackets separated by a coma.</p>
 <pre><code class="language-html">&lt;each :="[key, value] in {{'\{\{$items\}\}'}}"&gt;
   {{'\{\{$key\}\}: \{\{$value\}\}'}}
@@ -26,4 +26,18 @@
 <pre><code class="language-html">&lt;p&gt;0: a&lt;/p&gt;
 &lt;p&gt;1: b&lt;/p&gt;
 &lt;p&gt;2: c&lt;/p&gt;
+</code></pre>
+
+<h2>each ... else</h2>
+<p>Sometimes an array can be empty and if it is you can always catch that and display something which is why there is the else statement.</p>
+<pre><code class="language-javascript">Router.get('/', client.response.render('each.mix', {
+  items: []
+}))
+</code></pre>
+<pre><code class="language-html">&lt;each :="value in {{'\{\{$items\}\}'}}"&gt;
+  &lt;p&gt;{{'\{\{$value\}\}'}}&lt;/p&gt;
+&lt;/each&gt;
+&lt;else&gt;
+  &lt;span&gt;The array was empty.&lt;/span&gt;
+&lt;/else&gt;
 </code></pre>

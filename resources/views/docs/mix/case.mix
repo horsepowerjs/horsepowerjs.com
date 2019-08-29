@@ -21,7 +21,7 @@
   &lt;span&gt;Nothing matched the case statement&lt;/span&gt;
 &lt;/default&gt;</code></pre>
 
-<h2>Full Example</h2>
+<h2>Full example</h2>
 <pre><code class="language-html">
   &lt;case :="{{'\{\{$myVar\}\}'}}"&gt;
     &lt;when :="1"&gt;

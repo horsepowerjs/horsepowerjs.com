@@ -1,6 +1,6 @@
 <h1>What are mix files?</h1>
 <p>Mix files are html files with extra syntax sugar. They allow you to do things that html would otherwise not allow such as including other files, looping over arrays, if/else statements, and many other things.</p>
-<h1>My First Mix</h1>
+<h1>My first mix file</h1>
 <p>A basic mix file can contain any html and even exclude any of the additional extras that are included to be considered valid.</p>
 <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;

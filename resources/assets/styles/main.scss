@@ -1,5 +1,6 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap');
+@import 'framework/variables';
 
 * {
   box-sizing: border-box;
@@ -313,6 +314,56 @@ footer {
     &.nav-h4 {
       padding-left: 30px;
       font-size: 0.94rem;
+    }
+  }
+}
+
+#master-nav > ul {
+  & > li {
+    & > a {
+      color: #4a4a4a;
+      transition: padding-left 0.5s;
+
+      &:hover {
+        padding-left: 0.5em;
+        text-decoration: none;
+      }
+    }
+
+    & > ul {
+      overflow: hidden;
+      height: 0;
+      margin: 0;
+      padding-left: 1em;
+
+      & > li {
+        list-style-type: none;
+      }
+    }
+
+    &.visible {
+      & > a {
+        padding-left: 0.5em;
+      }
+
+      & > ul {
+        transition: height linear 1s;
+        height: inherit;
+
+        & > li.selected {
+          margin-left: 1em;
+          color: $secondary-color;
+
+          & > a {
+            color: #4a4a4a;
+            font-weight: bold;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
     }
   }
 }

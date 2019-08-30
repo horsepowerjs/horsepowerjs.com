@@ -1,10 +1,13 @@
+<h1>Include/Require</h1>
+<p><code>include</code> and <code>require</code> both allow for injecting html into a file at that current line.</p>
+<p>When a file is included, the code it contains will inherit the variable scope of the line on which the include occurs. Any variables available at that line in will become available within the called file.</p>
 <h1>Include</h1>
-<p>Including a file allows you to inject html from one file into the current location of the include. If the file is not found the block gets replaced with nothing aka an empty document fragment.</p>
+<p>Include loads a file into the current line. If the file is not found the block gets replaced with nothing aka an empty document fragment.</p>
 <p>Lets assume you have navigation on many pages, we could include that navigation using a single line in multiple files like this:</p>
 <pre><code class="language-html">&lt;nav&gt;
   &lt;include file="/stubs/my-nav"&gt;&lt;/include&gt;
 &lt;/nav&gt;</code></pre>
-<p>Then if we had the content of that include looking something like this:</p>
+<p>Then if we had the content of that include <code>/stubs/my-nav</code> looking something like this:</p>
 <pre><code class="language-html">&lt;ul&gt;
   &lt;li&gt;&lt;a href="/home"&gt;&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="/profile"&gt;&lt;/a&gt;&lt;/li&gt;

@@ -15,7 +15,7 @@
 <pre><code class="language-javascript">Router.get('/', client => client.response.render('main.mix'))</code></pre>
 <p>Mix files can become more powerful by using <code><a href="/docs/mix/extend">extends</a></code> to extend a parent file and using <code><a href="/docs/mix/block">block</a></code> to set html within the parent.</p>
 <h1>Minify</h1>
-<p>Mix files are automatically minified, for the smallest possible data transfer over http. Settings can be changed using the built settings found in the <a href="https://www.npmjs.com/package/html-minifier#options-quick-reference">html minifier</a> package.</p>
+<p>Mix files are automatically minified, for a small data transfer over http. Settings can be changed using the builtin settings found in the <a href="https://www.npmjs.com/package/html-minifier#options-quick-reference">html minifier</a> package.</p>
 <p>The default settings that are set are as follows:</p>
 <pre><code class="language-javascript">{
   collapseWhitespace: true,
@@ -32,7 +32,7 @@
   minifyCSS: true,
   minifyJS: true
 }</code></pre>
-<p>To replace or add your own options you can update the <code>minifier</code> object with the <code>config/view.js</code> file.</p>
+<p>To replace or add your own options you can update the <code>minifier</code> object within the <code>config/view.js</code> file.</p>
 <pre><code class="language-javascript">module.exports = {
   minifier: {
     removeOptionalTags: false

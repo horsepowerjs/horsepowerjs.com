@@ -91,7 +91,7 @@ Router.get('/', 'welcome')</code></pre>
   </li>
 </ul>
 <pre><code class="language-javascript">Router.resource('photos', 'Photos')</code></pre>
-<table style="width: 100%">
+<table class="pure-table">
   <thead>
     <tr>
       <th style="width: 100px;">Method</th>

@@ -1,0 +1,70 @@
+<h1>Responses</h1>
+<p>All controllers should return a response to be sent back to the client. A response can be sent in many of the built in ways that horsepower supports.</p>
+<h2>Strings</h2>
+<p>Strings can be sent as a response and will automatically be converted to a full HTTP response with a header of <code>text/html</code>.</p>
+<pre><code class="language-javascript">Router.get('/', () => 'Hello World')</code></pre>
+
+<h2>Auto JSON</h2>
+<p>When something that is returned which is not a <code>Response</code> object or <code>string</code>, it will be converted to a full json HTTP response with a header of <code>application/json</code>.</p>
+<pre><code class="language-javascript">Router.get('/arr', () => ['a', 'b', 'c'])
+Router.get('/obj', () => ({ a: 'a', b: 'b', c: 'c' }))
+Router.get('/bool', () => true)
+Router.get('/num', () => 123)</code></pre>
+
+<h2>Response Object</h2>
+<p>The response object has multiple methods for returning different types of responses each with their own unique feature.</p>
+
+<h3>html</h3>
+<p><code>html</code> is the most basic response, it is the same as returning a string in the controller.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.html('Hello World'))</code></pre>
+
+<h3>json</h3>
+<p><code>json</code> is another basic return type, it can be automatically executed by something that isn't a <code>Response</code> object or a <code>string</code>. However if you need to return a <code>string</code> as json (since strings get converted to html instead of json) it can be done using this built in method.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.json('Hello World'))</code></pre>
+
+<h3>render</h3>
+<p><code>render</code> will render a template, and return it with a full HTTP response with a header of <code>text/html</code>.</p>
+<p>Horsepower has its own rendering engine which uses mix files. However, other rendering engines are supported. Horsepower will use the correct rendering engine based on the the file extension passed to renderer. This will allow for the usage of multiple rendering engines in the same project.</p>
+<ul>
+  <li><code>Horsepower</code> &ndash; must pass a <code>.mix</code> extension to the renderer</li>
+  <li><code>Pug</code> &ndash; must pass a <code>.pug</code> extension to the renderer</li>
+  <li><code>Mustache</code>&ndash; must pass a <code>.mustache</code> extension to the renderer</li>
+  <li><code>Handlebars</code>&ndash; must pass a <code>.hbs</code> extension to the renderer</li>
+</ul>
+<p class="warn"><strong>Note:</strong> You must manually install the package to render with a particular extension. Rendering engines do not come pre-installed (This includes the horsepower rendering engine).</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.render('main.mix'))</code></pre>
+
+<h3>cached</h3>
+<p><code>cached</code> acts exactly the same as <code>render</code> except that once it has rendered the template, it saves the resulting html into a cache. Once the page has loaded a two or more times the file will be loaded from the cache unless it has expired in which case it will re-render the template.</p>
+<p class="warn"><strong>Note:</strong> Files with dynamic routes can be cached, however, this could potentially generate lots of cached files that are saved on the server.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.cached('main.mix', 3600))</code></pre>
+
+<h3>download</h3>
+<p><code>download</code> will force a file download to be saved to the clients computer. This is done by setting the <code>Content-Disposition</code> header.</p>
+<p>There are two ways to force a download on the client, the first way is to send the download response and pass a buffer as the second parameter.</p>
+<pre><code class="language-javascript">Router.get('/videos/movie', async client => {
+  let resources = Storage.mount('resources')
+  return client.response.download('movie.mpeg', await resources.read('videos/movie.mpeg'))
+})</code></pre>
+<p>The second way to force a download is to pass a path as a string to the second parameter. The <code>Content-Type</code> header will automatically be added when a string is passed.</p>
+<pre><code class="language-javascript">Router.get('/videos/movie', client => {
+  let resources = Storage.mount('resources')
+  return client.response.download('movie.mpeg', resources.toPath('videos/movie.mpeg'))
+})</code></pre>
+
+<h3>file</h3>
+<p><code>file</code> is the exact same as <code>download</code> except that it doesn't set the <code>Content-Disposition</code> header. This is useful for sending files to the client that the browser will automatically handle.</p>
+
+<h3>redirect</h3>
+<p>A client can be redirected in two ways. One way is by the name of the route and the other is by a physical http location.</p>
+
+<h4>to</h4>
+<p><code>to</code> will redirect a client to a particular route as long as the route has a name attached to it.</p>
+<pre><code class="language-javascript">Router.get('/', () => '&lt;h1&gt;Welcome Home&lt;/h1&gt;').name('home')
+
+Router.get('/redirect', client => client.response.redirect.to('home'))
+</code></pre>
+
+<h4>location</h4>
+<p><code>location</code> will redirect a client to a physical location on the internet. This could be within the current application or to a completely different website.</p>
+<pre><code class="language-javascript">Router.get('/google', client => client.response.redirect.location('//google.com'))</code></pre>

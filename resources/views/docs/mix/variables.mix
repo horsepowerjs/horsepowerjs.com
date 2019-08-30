@@ -1,0 +1,20 @@
+<h1>Variables</h1>
+<p>Variables will allow you to access data passed into the renderer from the controller.</p>
+
+<h2>Assignment</h2>
+<p>To assign a variable we would create it in the controller when <code>render()</code> is called. For example, if we were to create a route that renders a view with <code>name</code> in the data like this.</p>
+<pre><code class="language-javascript">Router.get('/', client => client.response.render('main.mix', {
+  name: 'Billy'
+})</code></pre>
+<p>We could then access that variable within the template.</p>
+
+<h2>Template assignment</h2>
+<p>The only way to assign a variable in a template is when using an <code>each</code> or <code>for</code>. Otherwise variables must be initiated within the controllers <code>render()</code> call.</p>
+
+<h2>Template access</h2>
+<p>To access a variable that has already been created within the template you would create double braces <code>{{'\{\{\}\}'}}</code> and prefix the variable with a <code>$</code> within the braces. To utilizes the <code>name</code> variable it would look something like this.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;body&gt;
+    Hello {{'\{\{$name\}\}'}}
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>

@@ -1,0 +1,22 @@
+<h1>Functions</h1>
+<p>Functions allow you to run groups of code within the template renderer.</p>
+
+<h2>Assignment</h2>
+<p>Functions are assigned the same way that variables are assigned, as they are passed to the renderer data object.</p>
+<p class="warn"><strong>Note:</strong> If a function returns anything, it should return a string otherwise the result will be converted to a string which means an object will display as <code>[object Object]</code></p>
+<pre><code class="language-javascript">const crypto = require('crypto')
+
+Router.get('/', client => client.response.render('main.mix', {
+  md5: (string) => crypto.createHash('md5').update(string).digest('hex'),
+  emails: [ 'one@example.com', 'two@example.com', 'three@example.com' ]
+}))</code></pre>
+
+<h2>Template access</h2>
+<p>A function is used in a similar way that a variable is used. So, it must be between double braces <code>{{'\{\{\}\}'}}</code> and it is formatted the same as a function in javascript. The function can also take parameters just like a javascript function.</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;body&gt;
+    &lt;each :="email in {{'\{\{$emails\}\}'}}"&gt;
+      &lt;img src="https://www.gravatar.com/avatar/{{'\{\{md5($email)\}\}'}}"&gt;
+    &lt;/each&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>

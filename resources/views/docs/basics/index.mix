@@ -1,0 +1,2 @@
+<h1>Before you begin</h1>
+<p>Before you begin, you should first take a look at the <a href="{{route('getting-started')}}">Getting Started</a> section, this will get you on the path to start building horsepower applications.</p>

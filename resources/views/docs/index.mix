@@ -1,4 +1,19 @@
 <h1>Introduction</h1>
-
+<h2>Server Requirements</h2>
+<p>Horsepower has some system requirements.</p>
+<table class="pure-table">
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>Min Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nodejs</td>
+      <td>10.x.x</td>
+    </tr>
+  </tbody>
+</table>
 <h2>CLI</h2>
 <h2></h2>

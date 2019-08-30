@@ -1,22 +1,24 @@
 <ul>
-  <li><a pattern="/docs/api/*" class="header pure-text--weight-bold">API</a>
+  <li><a pattern="/docs/basics/*" class="header pure-text--weight-bold">The Basics</a>
     <ul class="fa-ul">
-      <li><a href="/docs/api">Introduction</a></li>
-      <li><a href="/docs/api/routing">Routing</a></li>
-      <li><a href="/docs/api/controllers">Controllers</a></li>
-      <li><a href="/docs/api/responses">Responses</a></li>
-      <li><a href="/docs/api/middleware">Middleware</a></li>
-      <li><a href="/docs/api/storage">Storage</a></li>
-      <li><a href="/docs/api/sessions">Sessions</a></li>
-      <li><a href="/docs/api/mysql">MySQL</a></li>
+      <li><a href="/docs/basics">Introduction</a></li>
+      <li><a href="/docs/basics/routing">Routing</a></li>
+      <li><a href="/docs/basics/controllers">Controllers</a></li>
+      <li><a href="/docs/basics/responses">Responses</a></li>
+      <li><a href="/docs/basics/middleware">Middleware</a></li>
+      <li><a href="/docs/basics/storage">Storage</a></li>
+      <li><a href="/docs/basics/sessions">Sessions</a></li>
+      <li><a href="/docs/basics/mysql">MySQL</a></li>
     </ul>
   </li>
-  <li><a pattern="/docs/mix/*" class="header pure-text--weight-bold">Mix</a>
+  <li><a pattern="/docs/mix/*" class="header pure-text--weight-bold">Frontend</a>
     <ul class="fa-ul">
       <li><a href="/docs/mix">Introduction</a></li>
       <li><a href="/docs/mix/extend">Extend</a></li>
       <li><a href="/docs/mix/block">Block</a></li>
       <li><a href="/docs/mix/include-require">Include/Require</a></li>
+      <li><a href="/docs/mix/variables">Variables</a></li>
+      <li><a href="/docs/mix/functions">Functions</a></li>
       <li><a href="/docs/mix/case">Case</a></li>
       <li><a href="/docs/mix/debug">Debug</a></li>
       <li><a href="/docs/mix/each">Each</a></li>
@@ -25,7 +27,7 @@
       <li><a href="/docs/mix/lang">Lang</a></li>
     </ul>
   </li>
-  <li><a pattern="/docs/cli/*" class="header pure-text--weight-bold">CLI</a>
+  <li><a pattern="/docs/cli/*" class="header pure-text--weight-bold">Command line</a>
     <ul class="fa-ul">
       <li><a href="/docs/cli/make">Make</a></li>
       <li><a href="/docs/cli/package">Package</a></li>

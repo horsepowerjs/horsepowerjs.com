@@ -12,9 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@horsepower/router": "^1.0.0",
-    "@horsepower/server": "^1.0.0",
-    "@horsepower/storage": "^1.0.0",
+    "@horsepower/router": "^1.0.2",
+    "@horsepower/server": "^1.0.2",
+    "@horsepower/storage": "^1.0.1",
+    "@horsepower/template": "^1.0.3",
     "dotenv": "^8.1.0"
   },
   "devDependencies": {
